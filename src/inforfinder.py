@@ -147,6 +147,7 @@ class Inforfinder:
                     url = redir
                 else:
                     url = domi
+                    url = unicode(url).replace(u'\xf1',"")
                 if cmsi.existsText(str(url), "http") != 1 and url != 0 and url != None:
                     url = "http://" + url
                 if cmsi.checkWP(url) == 1:
@@ -198,110 +199,6 @@ class Inforfinder:
         print (self.getLogo())
         requests.packages.urllib3.disable_warnings()
         requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-
-
-def main():
-    requests.packages.urllib3.disable_warnings()
-    requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-    ds = DomainSearch()
-    cmsi = CmsIdentifier()
-    hcheck = HeadersCheck()
-    ifinder = Inforfinder()
-    ifinder.howToDo(sys.argv)
-    cms=0
-    sinfo=0
-    popcion=0
-    dom=[]
-    try:
-        domarr=0
-        if(len(sys.argv)<2):
-            sys.argv.append("--help")
-        for i in range(1,len(sys.argv)):
-            if (sys.argv[i].lower() == "--help" ):
-                ifinder.printHelpInfo()
-                break
-            if (sys.argv[i]=="-cms"):
-                cms=1
-            if (sys.argv[i]=="-servinfo"):
-                sinfo=1
-            if (sys.argv[i]=="-d"):
-                dom=[sys.argv[i+1]]
-                popcion=1
-            if (sys.argv[i]=="-dD"):
-                try:
-                    ip = ds.getDomainAEntry(ds.getDomainCNameEntry(sys.argv[i+1]))
-                except Exception as ie:
-                    ip = -1                                
-                if (ip==-1):
-                    ip=ds.getDomainAEntry(sys.argv[i+1])  
-                dom=ds.SearchDomains(ip)
-                popcion=1
-            if (sys.argv[i]=="-dI"):
-                dom=ds.SearchDomains(sys.argv[i+1])
-                popcion=1
-            if (sys.argv[i]=="-dR" and len(sys.argv)>= 4):
-                dom=ds.SearchDomainsOnIpRange(sys.argv[i+1],sys.argv[i+2])
-                domarr=1
-                popcion=1
-            if (sys.argv[i]=="-dF"):
-                dom = []
-                f = open(sys.argv[i+1], 'r')
-                for line in f:
-                    dom.append(line.replace("\n",""))
-                f.close()
-                popcion=1
-        sname=""
-        if cms==1 and popcion==1:
-            for y in dom:
-                if domarr==1:
-                    domi=y[1]
-                else:
-                    domi=y
-                cmstype="No CMS detected"
-                redir=cmsi.checkRedir(domi)
-                if redir != 0:
-                    url=redir
-                else:
-                    url=domi
-                if cmsi.existsText(str(url),"http") != 1 and url != 0 and url != None:
-                    url= "http://"+url                
-                if cmsi.checkWP(url) == 1:
-                    cmstype="WordPress (version: "+ str(cmsi.checkWPVersion(url))+")"
-                if cmsi.checkJoomla(url) == 1:
-                    cmstype="Joomla (version: "+ str(cmsi.checkJoomlaVersion(url))+")"
-                if cmsi.checkPrestaShop(url) == True:
-                    cmstype="Prestashop (version: No version detected)"   
-                    #TODO cmstype="Prestashop (version: "+ str(cmsi.checkPrestashoVersion(url))+")"   
-                if  sinfo == 1:
-                    try:
-                        hcheck.getHeaders(url,"")
-                        servname = hcheck.getServerName()
-                    except Exception:
-                        servname = "No detected"
-                    sname = "Server-software:" + str(servname)
-                    spb = hcheck.getPoweredBy()
-                    if spb != 0 and spb != "" and spb != None:
-                        sname = sname +" Powered-By:"+hcheck.getPoweredBy()
-                print(domi+"\t"+cmstype+"\t"+str(sname))
-        else:
-            if popcion==1:
-                for i in dom:
-                    if domarr==1:
-                        domi=i[1]
-                    else:
-                        domi=i
-                    if  sinfo == 1:
-                        if cmsi.existsText(domi,"http") != 1:
-                            hcheck.getHeaders("http://"+domi,"")
-                        else:
-                            hcheck.getHeaders(domi,"")
-                        sname = "Server-software:"+hcheck.getServerName()
-                        spb = hcheck.getPoweredBy()
-                        if spb != 0 and spb != "" and spb != None:
-                            sname = sname +" Powered-By:"+hcheck.getPoweredBy()
-                        print(domi+"\t"+str(sname))
-    except KeyboardInterrupt as kie:
-            exit()
 
 if __name__ == "__main__":
     ifinder = Inforfinder()

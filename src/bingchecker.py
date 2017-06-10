@@ -2,6 +2,7 @@
 
 import DNS
 import requests
+import sys
 
 
 class DomainSearch:
@@ -126,8 +127,9 @@ class DomainSearch:
                 if(self.isSeriuslyAtThere(tmpres[w],iptmp)):
                     #print tmpres[w]+"\n"
                     tmpreturn[iptmp].append(tmpres[w])
-                    print "."
+                    sys.stdout.write(".")
             #print "--------------------------------------\n"
+            print "\n"
             if(int(octa[0])==int(ipfintmp[0]) and int(octa[1])==int(ipfintmp[1])\
               and int(octa[2])==int(ipfintmp[2]) and int(octa[3])==int(ipfintmp[3])):
                 count=-1

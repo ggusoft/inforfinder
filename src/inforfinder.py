@@ -10,6 +10,7 @@ class Inforfinder:
 
     config = {
         'commands': {
+            '--help': 'self.printHelpInfo()',
             '-help':'self.printHelpInfo()',
             '-d':'self.execByDomain(args,pos)',
             '-dD':'self.execByMultiDomain(args,pos)',
@@ -118,9 +119,10 @@ class Inforfinder:
         self.printCabeceraInfo( str( ip + " - " + ip2 ))
         dom = ds.SearchDomainsOnIpRange(ip,ip2)
         if self.config['optionals']['-cms'] == 0 and self.config['optionals']['-servinfo'] == 0:
+            print dom
             for ip in dom:
                 self.printCabeceraInfo(ip)
-                for d in ip:
+                for d in dom[ip]:
                     print d
                 print "================================================================================"
         else:
@@ -167,7 +169,7 @@ class Inforfinder:
                 spb = hcheck.getPoweredBy()
                 if spb != 0 and spb != "" and spb != None:
                     sname = sname + " Powered-By:" + hcheck.getPoweredBy()
-            print(domi + "\t" + cmstype + "\t" + str(sname))
+            print(unicode( domi + "\t" + cmstype + "\t" + unicode(sname)))
 
     def isExistsArg(self,argv,arg):
         try:

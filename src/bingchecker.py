@@ -11,6 +11,7 @@ class DomainSearch:
         try:
             if (dominio != ""):
                 DNS.defaults['server'] = ['8.8.8.8', '8.8.4.4']
+                DNS.defaults['timeout'] = 15
                 resul = DNS.dnslookup(dominio, "A")
                 if (len(resul) > 0):
                     return resul[0]
@@ -30,6 +31,7 @@ class DomainSearch:
         try:
             if(dominio!=""):
                 DNS.defaults['server'] = ['8.8.8.8', '8.8.4.4']
+                DNS.defaults['timeout'] = 15
                 resul = DNS.dnslookup(dominio, "CNAME")
                 if( len(resul) > 0 ):
                     return resul[0]

@@ -129,6 +129,7 @@ class Inforfinder:
                 print "================================================================================"
 
     def execByFile(self,args,pos):
+        #TODO do it
         pass
 
     def execCmsAndSinfo(self,dom):

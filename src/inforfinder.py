@@ -91,8 +91,6 @@ class Inforfinder:
             ip = ds.getDomainAEntry(args[pos + 1])
         self.printCabeceraInfo(ip)
         dom = ds.SearchDomains(ip)
-        #self.execCmsAndSinfo(dom)
-        print dom
         if self.config['optionals']['-cms'] == 0 and self.config['optionals']['-servinfo'] == 0:
             for d in dom:
                 print d
@@ -119,7 +117,6 @@ class Inforfinder:
         self.printCabeceraInfo( str( ip + " - " + ip2 ))
         dom = ds.SearchDomainsOnIpRange(ip,ip2)
         if self.config['optionals']['-cms'] == 0 and self.config['optionals']['-servinfo'] == 0:
-            print dom
             for ip in dom:
                 self.printCabeceraInfo(ip)
                 for d in dom[ip]:

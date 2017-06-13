@@ -34,7 +34,7 @@ Find more information on how to use this app:
 
 	 -dR <IP inicio> <IP fin>		Get a domain list hosted in every IP of the specified range
 
-	 -dF <file>				Get a list with all domains hosted at same IP from a file
+	 -dF <file>				Get a list with all domains hosted at same IP from a file, the file contens a IP by line
 
 
 	 Optionals:

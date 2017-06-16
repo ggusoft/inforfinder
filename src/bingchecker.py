@@ -63,7 +63,7 @@ class DomainSearch:
         try:
             r = requests.get(url, headers=headers, verify=False)
             ol = r.text.split("class=\"xbul")
-            li = ol[1].split("<li>")
+            li = ol[2].split("<li>")
             li[len(li) - 17] = li[len(li) - 17].split("</ol>")[0]
             for a in range(1, len(li) - 16):
                 resul.append(li[a].split(">")[1].replace("</a",""))

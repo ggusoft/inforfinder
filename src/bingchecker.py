@@ -59,18 +59,23 @@ class DomainSearch:
         #iptrans=ip.replace(".","/")
         iptrans = str(ip)
         url="https://www.robtex.com/?ip="+iptrans+"&shared=1"
-        resul = []
+        dominios = []
         try:
-            r = requests.get(url, headers=headers, verify=False)
-            ol = r.text.split("class=\"xbul")
-            li = ol[2].split("<li>")
-            li[len(li) - 17] = li[len(li) - 17].split("</ol>")[0]
-            for a in range(1, len(li) - 16):
-                resul.append(li[a].split(">")[1].replace("</a",""))
-
+            page = requests.get(url, headers=headers, verify=False)
+            tree = html.fromstring(page.content)
+            ols = tree.find_class("xbul")
+            for ol in ols:
+                lis = ol.xpath('li')
+                for li in lis:
+                    dominio = li.text_content()
+                    try:
+                        if (dominios.index(dominio) > -1) == False:
+                            dominios.append(dominio)
+                    except ValueError:
+                        dominios.append(dominio)
         except Exception as e:
             pass
-        return resul
+        return dominios
 
     def SearchDomains(self,ip):
         try:

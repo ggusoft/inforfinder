@@ -3,7 +3,7 @@
 import DNS
 import requests
 import sys
-
+from lxml import html
 
 class DomainSearch:
 
@@ -74,7 +74,7 @@ class DomainSearch:
                     except ValueError:
                         dominios.append(dominio)
         except Exception as e:
-            pass
+            print e
         return dominios
 
     def SearchDomains(self,ip):

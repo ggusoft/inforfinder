@@ -1,30 +1,24 @@
 #!/usr/bin/python
 
 import DNS
-import pycurl
-import cStringIO
+import requests
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from headerscheck import HeadersCheck
 
 class CmsIdentifier:
-    def curl(self,url,useragent):
+    def curl(self, url, useragent):
         try:
-            if useragent=="":
-                useragent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2)\
+            requests.packages.urllib3.disable_warnings()
+            requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+            url = unicode(url)
+            if useragent == "":
+                useragent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2)\
                  AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1944.0 Safari/537.36'
-                buf = cStringIO.StringIO()
-                c = pycurl.Curl()
-                c.setopt(c.URL, url)
-                c.setopt(pycurl.TIMEOUT,30)
-                c.setopt(pycurl.CONNECTTIMEOUT,20)
-                c.setopt(pycurl.MAXREDIRS, 5)
-                c.setopt(pycurl.NOSIGNAL, 1)
-                c.setopt(c.USERAGENT,useragent)
-                c.setopt(c.WRITEFUNCTION, buf.write)
-                c.perform()
-                res = buf.getvalue()
-                buf.close()
-                return res
-        except:
+            headers = {'User-Agent': useragent}
+            r = requests.get(url, headers=headers, verify=False,timeout=30)
+            res = r.text
+            return res
+        except Exception as e:
             return "."
 
     def checkRedir(self,url):

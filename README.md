@@ -7,12 +7,13 @@ Requires python libs: pyRequests and pyDNS
 
 -First, you need to install complementary libraries: 
 	
-	user@machine$ sudo apt-get install python-dns python-dnspython python-requests python
+	user@machine$ sudo apt-get install python-dns python-dnspython python-requests python-lxml python
 
 	OR
 
         pip install  pydns
 	pip install requests --upgrade
+        pip install  lxml
 	
 -Then Download "inforfinder"
 

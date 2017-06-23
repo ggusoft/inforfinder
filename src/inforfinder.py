@@ -20,7 +20,8 @@ class Inforfinder:
         },
         'optionals':{
             '-cms':0,
-            '-servinfo':0
+            '-servinfo':0,
+            '--subdomain-enum':0
         }
     }
 
@@ -95,6 +96,7 @@ class Inforfinder:
         if self.config['optionals']['-cms'] == 0 and self.config['optionals']['-servinfo'] == 0:
             for d in dom:
                 print d
+                self.getSubdomains(d)
         else:
             self.execCmsAndSinfo(dom)
         print "================================================================================"
@@ -107,6 +109,7 @@ class Inforfinder:
         if self.config['optionals']['-cms'] == 0 and self.config['optionals']['-servinfo'] == 0:
             for d in dom:
                 print d
+                self.getSubdomains(d)
         else:
             self.execCmsAndSinfo(dom)
         print "================================================================================"
@@ -122,6 +125,7 @@ class Inforfinder:
                 self.printCabeceraInfo(ip)
                 for d in dom[ip]:
                     print d
+                    self.getSubdomains(d)
                 print "================================================================================"
         else:
             for ip in dom:
@@ -145,6 +149,7 @@ class Inforfinder:
                 if self.config['optionals']['-cms'] == 0 and self.config['optionals']['-servinfo'] == 0:
                     for d in dom:
                         print d
+                        self.getSubdomains()
                 else:
                     self.execCmsAndSinfo(dom)
                 print "================================================================================"
@@ -188,6 +193,17 @@ class Inforfinder:
                 if spb != 0 and spb != "" and spb != None:
                     sname = sname + " Powered-By:" + hcheck.getPoweredBy()
             print(unicode( domi + "\t" + cmstype + "\t" + unicode(sname)))
+            self.getSubdomains(y)
+
+    def getSubdomains(self,domain):
+        print ("\t[-] Subdomains of " + str(domain) + ":" )
+        if self.config['optionals']['--subdomain-enum'] == 1:
+            ds = DomainSearch()
+            subdomains = ds.subdomainEnum(domain)
+            for subdomain in subdomains:
+                if len(subdomain) > 0:
+                    print ("\tSubdomain: " + subdomain['subdomain'] + ", IP: " + subdomain['ip'])
+        print ("\n")
 
     def isExistsArg(self,argv,arg):
         try:

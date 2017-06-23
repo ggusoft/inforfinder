@@ -104,7 +104,7 @@ class DomainSearch:
         return doms
 
     def subdomainEnum(self,dominio):
-        subdomenum = {}
+        subdomenum = []
         wordlisttext = ""
         try:
             f = open( os.path.dirname(os.path.abspath(__file__)) + "/subdomlist.txt","r")
@@ -112,21 +112,21 @@ class DomainSearch:
             f.close()
         except:
             return "Issue"
-        subdomaintemp = []
         for word in wordlisttext.split("\n"):
             if word != "":
                 wildcard = self.getDomainIP("1234.caca.test.1234.cacotas." + dominio)
                 if wildcard != "NotResolved":
                     wildcararray = {'subdomain':'*.'+dominio,'ip':wildcard}
-                    if wildcararray not in subdomaintemp:
-                        subdomaintemp.append(wildcararray)
+                    if wildcararray not in subdomenum:
+                        subdomenum.append(wildcararray)
                     #break
                 subdomain = word + "." + dominio
                 subdominioip = self.getDomainIP(word + "." + dominio)
                 if subdominioip != "NotResolved" and subdominioip != wildcard:
-                    subdomaintemp.append({'subdomain':subdomain,'ip':subdominioip})
-        subdomenum[dominio] = subdomaintemp
+                    subdomenum.append({'subdomain':subdomain,'ip':subdominioip})
         return subdomenum
+
+    #TODO check domains by ptr and IP whois abuses mail
 
     def SearchDomainsInRobtex(self,ip):
         headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36'}

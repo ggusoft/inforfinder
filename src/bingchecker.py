@@ -3,6 +3,7 @@
 import DNS
 import requests
 import sys
+import socket
 from lxml import html
 
 class DomainSearch:
@@ -31,7 +32,7 @@ class DomainSearch:
         try:
             if(dominio!=""):
                 DNS.defaults['server'] = ['8.8.8.8', '8.8.4.4']
-                DNS.defaults['timeout'] = 15
+                DNS.defaults['timeout'] = 10
                 resul = DNS.dnslookup(dominio, "CNAME")
                 if( len(resul) > 0 ):
                     return resul[0]
@@ -45,6 +46,17 @@ class DomainSearch:
             else:
                 return -2
 
+    def getDomainIP(self,dominio):
+        try:
+            aentry = self.getDomainAEntry(self.getDomainCNameEntry(dominio))
+            if aentry == -1 or aentry == -2:
+                aentry = self.getDomainAEntry(dominio)
+                if aentry == -1 or aentry == -2:
+                    return "NotResolved"
+            return aentry
+        except AttributeError as ae:
+            return "NotResolved"
+
     def isSeriuslyAtThere(self,dominio,ip):
         try:
             if (self.getDomainAEntry(dominio)==ip or self.getDomainAEntry(self.getDomainCNameEntry(dominio))==ip):
@@ -53,6 +65,42 @@ class DomainSearch:
                 return 0
         except AttributeError as ae:
             return 0
+
+    def getWhois(self,target,whoisserver="whois.internic.net"):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((whoisserver, 43))
+        s.send(target + "\r\n")
+
+        response = ""
+        while True:
+            data = s.recv(4096)
+            response += data
+            if not data:
+                break
+        s.close()
+        return response
+
+    def searchDomainsByIF(self,host,isdomain=False):
+        domsprovi = []
+        try:
+            if isdomain:
+                host = self.getDomainIP(host)
+            domsprovi = self.getWhois(host).split("for detailed information.\n\n")[1].split(
+               "\n\nTo single out one record")[0].split("\n")
+        except Exception as e:
+            pass
+            #print e
+        doms = []
+        for entrada in domsprovi:
+            entradalower = str(entrada).lower()
+            if self.isSeriuslyAtThere(entradalower,host):
+                doms.append(entradalower)
+                tmparraydom = entradalower.split(".")
+                lentmparraydom = len(tmparraydom)
+                dominio = str(tmparraydom[lentmparraydom-2]) + "." + str(tmparraydom[lentmparraydom-1])
+                if self.isSeriuslyAtThere(dominio,host) and dominio not in doms:
+                    doms.append(dominio)
+        return doms
 
     def SearchDomainsInRobtex(self,ip):
         headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36'}
@@ -90,7 +138,8 @@ class DomainSearch:
                 gie=gie
             contentmp= r.text.split("<cite>")
             resul = []
-            resul = self.SearchDomainsInRobtex(ip)
+            #resul = self.SearchDomainsInRobtex(ip)
+            resul = self.searchDomainsByIF(ip)
             for i in range(1,len(contentmp)):
                 tmp=contentmp[i].split("</cite>")[0]
                 tmp=tmp.replace("https://","")

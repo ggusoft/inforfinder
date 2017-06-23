@@ -196,8 +196,8 @@ class Inforfinder:
             self.getSubdomains(y)
 
     def getSubdomains(self,domain):
-        print ("\t[-] Subdomains of " + str(domain) + ":" )
         if self.config['optionals']['--subdomain-enum'] == 1:
+            print ("\t[-] Subdomains of " + str(domain) + ":")
             ds = DomainSearch()
             subdomains = ds.subdomainEnum(domain)
             for subdomain in subdomains:

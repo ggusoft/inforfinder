@@ -53,7 +53,7 @@ class Inforfinder:
    \x1b[0;33m
     ________________________________________________________________________
 
-    InforFinder v1.0.3
+    InforFinder v1.0.9
     Powered By GGUsoft 2017
     Domain collector and CMS recognizer / HTTP information server collector
     ________________________________________________________________________

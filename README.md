@@ -21,7 +21,7 @@ Requires python libs: pyRequests and pyDNS
 
 Find more information on how to use this app:
 	 
-	 InforFinder v1.0.1 Powered By GGUsoft 2017
+	 InforFinder v1.0.9 Powered By GGUsoft 2017
 
 	 Powered By GGUsoft 2017
 

@@ -15,7 +15,7 @@ class CmsIdentifier:
                 useragent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2)\
                  AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1944.0 Safari/537.36'
             headers = {'User-Agent': useragent}
-            r = requests.get(url, headers=headers, verify=False,timeout=30)
+            r = requests.get(url, headers=headers, verify=False,timeout=10)
             res = r.text
             return res
         except Exception as e:

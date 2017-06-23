@@ -4,6 +4,7 @@ import DNS
 import requests
 import sys
 import socket
+import os
 from lxml import html
 
 class DomainSearch:
@@ -12,7 +13,7 @@ class DomainSearch:
         try:
             if (dominio != ""):
                 DNS.defaults['server'] = ['8.8.8.8', '8.8.4.4']
-                DNS.defaults['timeout'] = 15
+                DNS.defaults['timeout'] = 5
                 resul = DNS.dnslookup(dominio, "A")
                 if (len(resul) > 0):
                     return resul[0]
@@ -102,6 +103,31 @@ class DomainSearch:
                     doms.append(dominio)
         return doms
 
+    def subdomainEnum(self,dominio):
+        subdomenum = {}
+        wordlisttext = ""
+        try:
+            f = open( os.path.dirname(os.path.abspath(__file__)) + "/subdomlist.txt","r")
+            wordlisttext = f.read()
+            f.close()
+        except:
+            return "Issue"
+        subdomaintemp = []
+        for word in wordlisttext.split("\n"):
+            if word != "":
+                wildcard = self.getDomainIP("1234.caca.test.1234.cacotas." + dominio)
+                if wildcard != "NotResolved":
+                    wildcararray = {'subdomain':'*.'+dominio,'ip':wildcard}
+                    if wildcararray not in subdomaintemp:
+                        subdomaintemp.append(wildcararray)
+                    #break
+                subdomain = word + "." + dominio
+                subdominioip = self.getDomainIP(word + "." + dominio)
+                if subdominioip != "NotResolved" and subdominioip != wildcard:
+                    subdomaintemp.append({'subdomain':subdomain,'ip':subdominioip})
+        subdomenum[dominio] = subdomaintemp
+        return subdomenum
+
     def SearchDomainsInRobtex(self,ip):
         headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36'}
         #iptrans=ip.replace(".","/")
@@ -132,7 +158,7 @@ class DomainSearch:
               'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2049.0 Safari/537.36'}
             url = 'http://www.bing.com/search'
             try:
-                r = requests.get(url, params=param,headers=headers)
+                r = requests.get(url, params=param,headers=headers,timeout=20)
             except Exception as gie:
                 print gie
                 gie=gie

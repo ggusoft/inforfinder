@@ -203,7 +203,7 @@ class Inforfinder:
             for subdomain in subdomains:
                 if len(subdomain) > 0:
                     print ("\tSubdomain: " + subdomain['subdomain'] + ", IP: " + subdomain['ip'])
-        print ("\n")
+            print ("\n")
 
     def isExistsArg(self,argv,arg):
         try:

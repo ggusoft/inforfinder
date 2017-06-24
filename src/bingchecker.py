@@ -9,12 +9,12 @@ from lxml import html
 
 class DomainSearch:
 
-    def getDomainAEntry(self,dominio):
+    def getEntry(self,dominio,type="A",timeout = 5,dnsservers = ['8.8.8.8', '8.8.4.4']):
         try:
             if (dominio != ""):
-                DNS.defaults['server'] = ['8.8.8.8', '8.8.4.4']
-                DNS.defaults['timeout'] = 5
-                resul = DNS.dnslookup(dominio, "A")
+                DNS.defaults['server'] = dnsservers
+                DNS.defaults['timeout'] = timeout
+                resul = DNS.dnslookup(dominio, type)
                 if (len(resul) > 0):
                     return resul[0]
                 else:
@@ -29,23 +29,14 @@ class DomainSearch:
         except Exception as e:
             return -2
 
-    def getDomainCNameEntry(self,dominio):
-        try:
-            if(dominio!=""):
-                DNS.defaults['server'] = ['8.8.8.8', '8.8.4.4']
-                DNS.defaults['timeout'] = 10
-                resul = DNS.dnslookup(dominio, "CNAME")
-                if( len(resul) > 0 ):
-                    return resul[0]
-                else:
-                    return -1
-            else:
-                    return -1
-        except Exception as e:
-            if e.rcode == 3:
-                return -1
-            else:
-                return -2
+    def getDomainAEntry(self,dominio,timeout = 5,dnsservers = ['8.8.8.8', '8.8.4.4']):
+        return self.getEntry(dominio, type="A", timeout=timeout, dnsservers=dnsservers)
+
+    def getDomainCNameEntry(self,dominio,timeout = 5,dnsservers = ['8.8.8.8', '8.8.4.4']):
+        return self.getEntry(dominio, type="CNAME", timeout=timeout, dnsservers=dnsservers)
+
+    def getDomainPtrEntry(self,ip,timeout = 5,dnsservers = ['8.8.8.8', '8.8.4.4']):
+        return self.getEntry(ip, type="ptr", timeout=timeout, dnsservers=dnsservers)
 
     def getDomainIP(self,dominio):
         try:

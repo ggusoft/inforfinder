@@ -36,7 +36,24 @@ class DomainSearch:
         return self.getEntry(dominio, type="CNAME", timeout=timeout, dnsservers=dnsservers)
 
     def getDomainPtrEntry(self,ip,timeout = 5,dnsservers = ['8.8.8.8', '8.8.4.4']):
-        return self.getEntry(ip, type="ptr", timeout=timeout, dnsservers=dnsservers)
+        try:
+            if (ip != ""):
+                DNS.defaults['server'] = dnsservers
+                DNS.defaults['timeout'] = timeout
+                resul = DNS.revlookup(ip)
+                if (len(resul) > 0):
+                    return resul
+                else:
+                    return -1
+            else:
+                return -1
+        except DNS.ServerError as e:
+            if e.rcode == 3:
+                return -1
+            else:
+                return -2
+        except Exception as e:
+            return -2
 
     def getDomainIP(self,dominio):
         try:

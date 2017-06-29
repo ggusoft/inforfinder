@@ -43,4 +43,5 @@ Find more information on how to use this app:
 	 inforfinder <command> -cms			Checks if every domain found has a cms website (wordpress, joomla ,etc) and show version
 
 	 inforfinder <command> -servinfo		Checks web server parameters
+
          inforfinder <command> --subdomain-enum		Lists subdomains of every domain found

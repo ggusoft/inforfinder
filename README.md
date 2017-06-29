@@ -27,19 +27,20 @@ Find more information on how to use this app:
 
 	 Commands:
 
-	 -d <dominio>				Get a domain for apply any optional commands
+	 -d <dominio>				Gets a domain for apply any optional commands
 
-	 -dD <dominio>				Get a domain list hosted in IP of the specified domain
+	 -dD <dominio>				Gets a domain list hosted in IP of the specified domain
 
-	 -dI <IP>				Get a domain list hosted in the specified IP 
+	 -dI <IP>				Gets a domain list hosted in the specified IP 
 
-	 -dR <IP inicio> <IP fin>		Get a domain list hosted in every IP of the specified range
+	 -dR <IP inicio> <IP fin>		Gets a domain list hosted in every IP of the specified range
 
-	 -dF <file>				Get a list with all domains hosted at same IP from a file, the file contens a IP by line
+	 -dF <file>				Gets a list with all domains hosted at same IP from a file, the file contens a IP by line
 
 
 	 Optionals:
 
-	 inforfinder <command> -cms		Check if every domain found has a cms website (wordpress, joomla ,etc) and show version
+	 inforfinder <command> -cms			Checks if every domain found has a cms website (wordpress, joomla ,etc) and show version
 
-	 inforfinder <command> -servinfo	Check web server parameters
+	 inforfinder <command> -servinfo		Checks web server parameters
+         inforfinder <command> --subdomain-enum		Lists subdomains of every domain found

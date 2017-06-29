@@ -64,17 +64,18 @@ class Inforfinder:
     def printHelpInfo(self):
         #print self.getLogo()
         print ("\n\t\x1b[0;38m Commands:\x1b[0m\r\n")
-        print ("\t\x1b[0;38m -d <dominio>\x1b[0m\t\t\t\tGet a domain for apply any optional commands\r\n")
-        print ("\t\x1b[0;38m -dD <dominio>\x1b[0m\t\t\t\tGet a domain list hosted in IP of the specified domain\r\n")
-        print ("\t\x1b[0;38m -dI <IP>\x1b[0m\t\t\t\tGet a domain list hosted in the specified IP \r\n")
+        print ("\t\x1b[0;38m -d <dominio>\x1b[0m\t\t\t\tGets a domain for apply any optional commands\r\n")
+        print ("\t\x1b[0;38m -dD <dominio>\x1b[0m\t\t\t\tGets a domain list hosted in IP of the specified domain\r\n")
+        print ("\t\x1b[0;38m -dI <IP>\x1b[0m\t\t\t\tGets a domain list hosted in the specified IP \r\n")
         print (
-        "\t\x1b[0;38m -dR <IP inicio> <IP fin>\x1b[0m\t\tGet a domain list hosted in every IP of the specified range\r\n")
-        print ("\t\x1b[0;38m -dF <file>\x1b[0m\t\t\t\tGet a list with all domains hosted"+
+        "\t\x1b[0;38m -dR <IP inicio> <IP fin>\x1b[0m\t\tGets a domain list hosted in every IP of the specified range\r\n")
+        print ("\t\x1b[0;38m -dF <file>\x1b[0m\t\t\t\tGets a list with all domains hosted"+
                " at same IP from a file, the file contens a IP by line\r\n")
         print ("\n\t\x1b[0;38m Optionals:\x1b[0m\r\n")
         print (
-        "\t\x1b[0;38m inforfinder <command> -cms\x1b[0m\t\tCheck if every domain found has a cms website (wordpress, joomla ,etc) and show version\r\n")
-        print ("\t\x1b[0;38m inforfinder <command> -servinfo\x1b[0m\tCheck web server parameter\r\n")
+        "\t\x1b[0;38m inforfinder <command> -cms\x1b[0m\t\t\tChecks if every domain found has a cms website (wordpress, joomla ,etc) and show version\r\n")
+        print ("\t\x1b[0;38m inforfinder <command> -servinfo\x1b[0m\t\tChecks web server parameter\r\n")
+        print ("\t\x1b[0;38m inforfinder <command> --subdomain-enum\x1b[0m\t\tLists subdomains of every domain found\r\n")
 
     def printCabeceraInfo(self,host):
         print ("\x1b[0;32m[\x1b[0m\x1b[0;32m*\x1b[0m\x1b[0;32m]\x1b[0mDomains of " + host + ":\n")

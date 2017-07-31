@@ -91,24 +91,29 @@ class DomainSearch:
 
     def searchDomainsByIF(self,host,isdomain=False):
         domsprovi = []
+        tocheck = ""
         try:
             if isdomain:
                 host = self.getDomainIP(host)
-            domsprovi = self.getWhois(host).split("for detailed information.\n\n")[1].split(
-               "\n\nTo single out one record")[0].split("\n")
+            #domsprovi = self.getWhois(host).split("for detailed information.\n\n")[1].split(
+            #   "\n\nTo single out one record")[0].split("\n")
+            tocheck = self.getWhois(host).split("   Server Name: ")
+            for i in range(1, len(tocheck)):
+                tochecknow = tocheck[i].split("\r\n")[0]
+                domsprovi.append(tochecknow)
         except Exception as e:
             pass
-            #print e
+            print e
         doms = []
         for entrada in domsprovi:
             entradalower = str(entrada).lower()
             if self.isSeriuslyAtThere(entradalower,host):
                 doms.append(entradalower)
-                tmparraydom = entradalower.split(".")
-                lentmparraydom = len(tmparraydom)
-                dominio = str(tmparraydom[lentmparraydom-2]) + "." + str(tmparraydom[lentmparraydom-1])
-                if self.isSeriuslyAtThere(dominio,host) and dominio not in doms:
-                    doms.append(dominio)
+            tmparraydom = entradalower.split(".")
+            lentmparraydom = len(tmparraydom)
+            dominio = str(tmparraydom[lentmparraydom-2]) + "." + str(tmparraydom[lentmparraydom-1])
+            if self.isSeriuslyAtThere(dominio,host) and dominio not in doms:
+                doms.append(dominio)
         return doms
 
     def subdomainEnum(self,dominio):

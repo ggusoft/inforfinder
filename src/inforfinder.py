@@ -54,31 +54,31 @@ class Inforfinder:
    \x1b[0;33m
     ________________________________________________________________________
 
-    InforFinder v1.0.9
-    Powered By GGUsoft 2017
+    InforFinder v2.0.0
+    Powered By GGUsoft 2022
     Domain collector and CMS recognizer / HTTP information server collector
     ________________________________________________________________________
     \x1b[0m\n\n
     """
 
     def printHelpInfo(self):
-        #print self.getLogo()
-        print ("\n\t\x1b[0;38m Commands:\x1b[0m\r\n")
-        print ("\t\x1b[0;38m -d <dominio>\x1b[0m\t\t\t\tGets a domain for apply any optional commands\r\n")
-        print ("\t\x1b[0;38m -dD <dominio>\x1b[0m\t\t\t\tGets a domain list hosted in IP of the specified domain\r\n")
-        print ("\t\x1b[0;38m -dI <IP>\x1b[0m\t\t\t\tGets a domain list hosted in the specified IP \r\n")
-        print (
+        #printself.getLogo()
+        print("\n\t\x1b[0;38m Commands:\x1b[0m\r\n")
+        print("\t\x1b[0;38m -d <dominio>\x1b[0m\t\t\t\tGets a domain for apply any optional commands\r\n")
+        print("\t\x1b[0;38m -dD <dominio>\x1b[0m\t\t\t\tGets a domain list hosted in IP of the specified domain\r\n")
+        print("\t\x1b[0;38m -dI <IP>\x1b[0m\t\t\t\tGets a domain list hosted in the specified IP \r\n")
+        print(
         "\t\x1b[0;38m -dR <IP inicio> <IP fin>\x1b[0m\t\tGets a domain list hosted in every IP of the specified range\r\n")
-        print ("\t\x1b[0;38m -dF <file>\x1b[0m\t\t\t\tGets a list with all domains hosted"+
+        print("\t\x1b[0;38m -dF <file>\x1b[0m\t\t\t\tGets a list with all domains hosted"+
                " at same IP from a file, the file contens a IP by line\r\n")
-        print ("\n\t\x1b[0;38m Optionals:\x1b[0m\r\n")
-        print (
+        print("\n\t\x1b[0;38m Optionals:\x1b[0m\r\n")
+        print(
         "\t\x1b[0;38m inforfinder <command> -cms\x1b[0m\t\t\tChecks if every domain found has a cms website (wordpress, joomla ,etc) and show version\r\n")
-        print ("\t\x1b[0;38m inforfinder <command> -servinfo\x1b[0m\t\tChecks web server parameter\r\n")
-        print ("\t\x1b[0;38m inforfinder <command> --subdomain-enum\x1b[0m\t\tLists subdomains of every domain found\r\n")
+        print("\t\x1b[0;38m inforfinder <command> -servinfo\x1b[0m\t\tChecks web server parameter\r\n")
+        print("\t\x1b[0;38m inforfinder <command> --subdomain-enum\x1b[0m\t\tLists subdomains of every domain found\r\n")
 
     def printCabeceraInfo(self,host):
-        print ("\x1b[0;32m[\x1b[0m\x1b[0;32m*\x1b[0m\x1b[0;32m]\x1b[0mDomains of " + host + ":\n")
+        print("\x1b[0;32m[\x1b[0m\x1b[0;32m*\x1b[0m\x1b[0;32m]\x1b[0mDomains of " + host + ":\n")
 
     def execByDomain(self,args,pos):
         dom = [args[pos + 1]]
@@ -96,11 +96,11 @@ class Inforfinder:
         dom = ds.SearchDomains(ip)
         if self.config['optionals']['-cms'] == 0 and self.config['optionals']['-servinfo'] == 0:
             for d in dom:
-                print d
+                print(d)
                 self.getSubdomains(d)
         else:
             self.execCmsAndSinfo(dom)
-        print "================================================================================"
+        print("================================================================================")
 
     def execByIP(self,args,pos):
         ds = DomainSearch()
@@ -109,11 +109,11 @@ class Inforfinder:
         dom = ds.SearchDomains(ip)
         if self.config['optionals']['-cms'] == 0 and self.config['optionals']['-servinfo'] == 0:
             for d in dom:
-                print d
+                print(d)
                 self.getSubdomains(d)
         else:
             self.execCmsAndSinfo(dom)
-        print "================================================================================"
+        print("================================================================================")
 
     def execByIpRange(self,args,pos):
         ds = DomainSearch()
@@ -125,14 +125,14 @@ class Inforfinder:
             for ip in dom:
                 self.printCabeceraInfo(ip)
                 for d in dom[ip]:
-                    print d
+                    print(d)
                     self.getSubdomains(d)
-                print "================================================================================"
+                print("================================================================================")
         else:
             for ip in dom:
                 self.printCabeceraInfo(ip)
                 self.execCmsAndSinfo(dom[ip])
-                print "================================================================================"
+                print("================================================================================")
 
     def execByFile(self,args,pos):
         ips = []
@@ -149,13 +149,13 @@ class Inforfinder:
                 dom = ds.SearchDomains(ip)
                 if self.config['optionals']['-cms'] == 0 and self.config['optionals']['-servinfo'] == 0:
                     for d in dom:
-                        print d
-                        self.getSubdomains()
+                        print(d)
+                        self.getSubdomains(d)
                 else:
                     self.execCmsAndSinfo(dom)
-                print "================================================================================"
+                print("================================================================================")
         except IOError:
-            print "The file couldn't be read"
+            print("The file couldn't be read")
 
 
     def execCmsAndSinfo(self,dom):
@@ -173,7 +173,7 @@ class Inforfinder:
                     url = redir
                 else:
                     url = domi
-                    url = unicode(url).replace(u'\xf1',"")
+                    url = url.replace(u'\xf1',"")
                 if cmsi.existsText(str(url), "http") != 1 and url != 0 and url != None:
                     url = "http://" + url
                 if cmsi.checkWP(url) == 1:
@@ -193,18 +193,18 @@ class Inforfinder:
                 spb = hcheck.getPoweredBy()
                 if spb != 0 and spb != "" and spb != None:
                     sname = sname + " Powered-By:" + hcheck.getPoweredBy()
-            print(unicode( domi + "\t" + cmstype + "\t" + unicode(sname)))
+            print( domi + "\t" + cmstype + "\t" + sname)
             self.getSubdomains(y)
 
     def getSubdomains(self,domain):
         if self.config['optionals']['--subdomain-enum'] == 1:
-            print ("\t[-] Subdomains of " + str(domain) + ":")
+            print("\t[-] Subdomains of " + str(domain) + ":")
             ds = DomainSearch()
             subdomains = ds.subdomainEnum(domain)
             for subdomain in subdomains:
                 if len(subdomain) > 0:
-                    print ("\tSubdomain: " + subdomain['subdomain'] + ", IP: " + subdomain['ip'])
-            print ("\n")
+                    print("\tSubdomain: " + subdomain['subdomain'] + ", IP: " + subdomain['ip'])
+            print("\n")
 
     def isExistsArg(self,argv,arg):
         try:
@@ -228,12 +228,12 @@ class Inforfinder:
                     toexec = self.config['commands'][cmd]
                     exec(toexec)
                     break
-            print "\n"
+            print("\n")
         except KeyboardInterrupt as kie:
             exit()
 
     def __init__(self):
-        print (self.getLogo())
+        print(self.getLogo())
         requests.packages.urllib3.disable_warnings()
         requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 

@@ -78,12 +78,13 @@ class DomainSearch:
     def getWhois(self,target,whoisserver="whois.internic.net"):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect((whoisserver, 43))
-        s.send(target + "\r\n")
+        targetstr = "{target}\n\r".format(target=target.decode("utf-8"))
+        s.send(targetstr.encode("utf-8"))
 
         response = ""
         while True:
             data = s.recv(4096)
-            response += data
+            response += data.decode("utf-8")
             if not data:
                 break
         s.close()
@@ -97,13 +98,13 @@ class DomainSearch:
                 host = self.getDomainIP(host)
             #domsprovi = self.getWhois(host).split("for detailed information.\n\n")[1].split(
             #   "\n\nTo single out one record")[0].split("\n")
-            tocheck = self.getWhois(host).split("   Server Name: ")
+            results = self.getWhois(host.encode("UTF-8"))
+            tocheck = results.split("   Server Name: ")
             for i in range(1, len(tocheck)):
                 tochecknow = tocheck[i].split("\r\n")[0]
                 domsprovi.append(tochecknow)
         except Exception as e:
-            pass
-            print e
+            print(str(e))
         doms = []
         for entrada in domsprovi:
             entradalower = str(entrada).lower()
@@ -161,7 +162,7 @@ class DomainSearch:
                     except ValueError:
                         dominios.append(dominio)
         except Exception as e:
-            print e
+            print(e)
         return dominios
 
     def SearchDomains(self,ip):
@@ -173,7 +174,7 @@ class DomainSearch:
             try:
                 r = requests.get(url, params=param,headers=headers,timeout=20)
             except Exception as gie:
-                print gie
+                print(gie)
                 gie=gie
             contentmp= r.text.split("<cite>")
             resul = []
@@ -224,7 +225,7 @@ class DomainSearch:
                     tmpreturn[iptmp].append(tmpres[w])
                     sys.stdout.write(".")
             #print "--------------------------------------\n"
-            print "\n"
+            print("\n")
             if(int(octa[0])==int(ipfintmp[0]) and int(octa[1])==int(ipfintmp[1])\
               and int(octa[2])==int(ipfintmp[2]) and int(octa[3])==int(ipfintmp[3])):
                 count=-1
@@ -247,6 +248,6 @@ class DomainSearch:
                         octa[2]=int(octa[2])+1
                     else:
                         count=-1
-        print "\n"
+        print("\n")
         return tmpreturn
 

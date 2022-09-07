@@ -11,7 +11,7 @@ Requires python libs: pyRequests and pyDNS
 
 	OR
 
-        pip install  pydns --> En python3 py3dns 
+        pip install  py3dns
 	pip install requests --upgrade
         pip install  lxml
 	

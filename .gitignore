@@ -2,3 +2,4 @@
 inforfinder_src/*.pyc
 *.pyc
 inforfinder.egg-info
+build/

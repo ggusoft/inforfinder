@@ -1,7 +1,7 @@
 #!/usr/bin/python
-from bingchecker import  DomainSearch
-from cmsidentifier import CmsIdentifier
-from headerscheck import HeadersCheck
+from inforfinder_src.bingchecker import  DomainSearch
+from inforfinder_src.cmsidentifier import CmsIdentifier
+from inforfinder_src.headerscheck import HeadersCheck
 import sys
 import requests.packages.urllib3
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -237,6 +237,10 @@ class Inforfinder:
         requests.packages.urllib3.disable_warnings()
         requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
-if __name__ == "__main__":
+def main():
     ifinder = Inforfinder()
     ifinder.howToDo(sys.argv)
+
+
+if __name__ == "__main__":
+    main()

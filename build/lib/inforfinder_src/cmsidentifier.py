@@ -3,7 +3,7 @@
 import DNS
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-from headerscheck import HeadersCheck
+from inforfinder_src.headerscheck import HeadersCheck
 
 class CmsIdentifier:
     def curl(self, url, useragent):

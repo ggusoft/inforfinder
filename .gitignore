@@ -1,2 +1,4 @@
 .idea/
-src/*.pyc
+inforfinder_src/*.pyc
+*.pyc
+inforfinder.egg-info

@@ -22,6 +22,8 @@ You can do the installation, with pip or you can install the inforfinder app as 
 - Then Download "inforfinder"
 
 
+## Using
+
 - The next step is to run "inforfinder.py": python inforfinder.py --help
 
 Find more information on how to use this app:

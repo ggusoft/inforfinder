@@ -27,7 +27,7 @@ You can do the installation, with pip or you can install the inforfinder app as 
 - The next step is to run "inforfinder.py": python inforfinder.py --help
 
 Find more information on how to use this app:
-	 ```
+	 <pre>
 	 InforFinder v1.0.9 Powered By GGUsoft 2017
 	
 	 Powered By GGUsoft 2017
@@ -51,4 +51,4 @@ Find more information on how to use this app:
 	 inforfinder <command> -servinfo		Checks web server parameters
 	
 	 inforfinder <command> --subdomain-enum          Lists subdomains of every domain found
-	 ```
+	 </pre>

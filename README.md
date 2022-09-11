@@ -28,9 +28,9 @@ You can do the installation, with pip or you can install the inforfinder app as 
 
 Find more information on how to use this app:
 	 <pre>
-	 InforFinder v1.0.9 Powered By GGUsoft 2017
+	 InforFinder v2.0.0 Powered By GGUsoft 2022
 	
-	 Powered By GGUsoft 2017
+	 Powered By GGUsoft 2022
 	
 	 Commands:
 	

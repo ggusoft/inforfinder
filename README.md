@@ -34,13 +34,13 @@ Find more information on how to use this app:
 	
 	 Commands:
 	
-	 -d <dominio>				Gets a domain for apply any optional commands
+	 -d <domain>				Gets a domain for apply any optional commands
 	
-	 -dD <dominio>				Gets a domain list hosted in IP of the specified domain
+	 -dD <domain>				Gets a domain list hosted in IP of the specified domain
 	
 	 -dI <IP>				Gets a domain list hosted in the specified IP 
 	
-	 -dR <IP inicio> <IP fin>		Gets a domain list hosted in every IP of the specified range
+	 -dR <IP start> <IP finish>		Gets a domain list hosted in every IP of the specified range
 	
 	 -dF <file>				Gets a list with all domains hosted at same IP from a file, the file contens a IP by line
 	 

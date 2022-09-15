@@ -70,11 +70,11 @@ class Inforfinder:
     def printHelpInfo(self):
         #printself.getLogo()
         print("\n\t\x1b[0;38m Commands:\x1b[0m\r\n")
-        print("\t\x1b[0;38m -d <dominio>\x1b[0m\t\t\t\tGets a domain for apply any optional commands\r\n")
-        print("\t\x1b[0;38m -dD <dominio>\x1b[0m\t\t\t\tGets a domain list hosted in IP of the specified domain\r\n")
+        print("\t\x1b[0;38m -d <domain>\x1b[0m\t\t\t\tGets a domain for apply any optional commands\r\n")
+        print("\t\x1b[0;38m -dD <domain>\x1b[0m\t\t\t\tGets a domain list hosted in IP of the specified domain\r\n")
         print("\t\x1b[0;38m -dI <IP>\x1b[0m\t\t\t\tGets a domain list hosted in the specified IP \r\n")
         print(
-        "\t\x1b[0;38m -dR <IP inicio> <IP fin>\x1b[0m\t\tGets a domain list hosted in every IP of the specified range\r\n")
+        "\t\x1b[0;38m -dR <IP start> <IP finish>\x1b[0m\t\tGets a domain list hosted in every IP of the specified range\r\n")
         print("\t\x1b[0;38m -dF <file>\x1b[0m\t\t\t\tGets a list with all domains hosted"+
                " at same IP from a file, the file contens a IP by line\r\n")
         print("\n\t\x1b[0;38m Optionals:\x1b[0m\r\n")

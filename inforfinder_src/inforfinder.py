@@ -108,6 +108,7 @@ class Inforfinder:
             self.execCmsAndSinfo(dom)
         print("================================================================================")
 
+
     def execByIP(self,args,pos):
         ds = DomainSearch()
         ip = args[pos + 1]
@@ -120,6 +121,7 @@ class Inforfinder:
         else:
             self.execCmsAndSinfo(dom)
         print("================================================================================")
+
 
     def execByIpRange(self,args,pos):
         ds = DomainSearch()
@@ -139,6 +141,7 @@ class Inforfinder:
                 self.printCabeceraInfo(ip)
                 self.execCmsAndSinfo(dom[ip])
                 print("================================================================================")
+
 
     def execByFile(self,args,pos):
         ips = []
@@ -181,7 +184,7 @@ class Inforfinder:
                     url = domi
                     url = url.replace(u'\xf1',"")
                 if cmsi.existsText(str(url), "http") != 1 and url != 0 and url != None:
-                    url = "http://" + url
+                    url = "https://" + url
                 if cmsi.checkWP(url) == 1:
                     cmstype = "WordPress (version: " + str(cmsi.checkWPVersion(url)) + ")"
                 if cmsi.checkJoomla(url) == 1:
@@ -202,6 +205,7 @@ class Inforfinder:
             print( domi + "\t" + cmstype + "\t" + sname)
             self.getSubdomains(y)
 
+
     def getSubdomains(self,domain):
         if self.config['optionals']['--subdomain-enum'] == 1:
             print("\t[-] Subdomains of " + str(domain) + ":")
@@ -212,12 +216,14 @@ class Inforfinder:
                     print("\tSubdomain: " + subdomain['subdomain'] + ", IP: " + subdomain['ip'])
             print("\n")
 
+
     def isExistsArg(self,argv,arg):
         try:
             pos = argv.index(arg)
             return [True,pos]
         except:
             return [False,-1]
+
 
     def howToDo(self,args):
         try:

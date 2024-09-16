@@ -211,6 +211,8 @@ class Inforfinder:
             print("\t[-] Subdomains of " + str(domain) + ":")
             ds = DomainSearch()
             subdomains = ds.subdomainEnum(domain)
+            if subdomains == "Issue":
+                return -1
             for subdomain in subdomains:
                 if len(subdomain) > 0:
                     print("\tSubdomain: " + subdomain['subdomain'] + ", IP: " + subdomain['ip'])

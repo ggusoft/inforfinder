@@ -50,5 +50,5 @@ Find more information on how to use this app:
 	
 	 inforfinder <command> -servinfo		Checks web server parameters
 	
-	 inforfinder <command> --subdomain-enum          Lists subdomains of every domain found
+	 inforfinder <command> --subdomain-enum   <dict file path>       Lists subdomains of every domain found
 	 </pre>

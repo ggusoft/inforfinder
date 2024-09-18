@@ -128,7 +128,7 @@ class DomainSearch:
             return "Issue"
         for word in wordlisttext.split("\n"):
             if word != "":
-                wildcard = self.getDomainIP("1234.caca.test.1234.cacotas." + dominio)
+                wildcard = self.getDomainIP("1234.kk.test.1234.kktas." + dominio)
                 if wildcard != "NotResolved":
                     wildcararray = {'subdomain':'*.'+dominio,'ip':wildcard}
                     if wildcararray not in subdomenum:

@@ -27,8 +27,12 @@ class Inforfinder:
         'optionals':{
             '-cms':0,
             '-servinfo':0,
-            '--subdomain-enum':0
-        }
+            '--subdomain-enum': {
+                'cmd':'self.setDictFile(args,pos)',
+                'enabled': 0
+            }
+        },
+        'dictfile': './subdomlist.txt'
     }
 
     def getLogo(self):
@@ -60,8 +64,8 @@ class Inforfinder:
    \x1b[0;33m
     ________________________________________________________________________
 
-    InforFinder v2.0.0
-    Powered By GGUsoft 2022
+    InforFinder v2.9.0
+    Powered By GGUsoft 2024
     Domain collector and CMS recognizer / HTTP information server collector
     ________________________________________________________________________
     \x1b[0m\n\n
@@ -81,7 +85,8 @@ class Inforfinder:
         print(
         "\t\x1b[0;38m inforfinder <command> -cms\x1b[0m\t\t\tChecks if every domain found has a cms website (wordpress, joomla ,etc) and show version\r\n")
         print("\t\x1b[0;38m inforfinder <command> -servinfo\x1b[0m\t\tChecks web server parameter\r\n")
-        print("\t\x1b[0;38m inforfinder <command> --subdomain-enum\x1b[0m\t\tLists subdomains of every domain found\r\n")
+        print("\t\x1b[0;38m inforfinder <command> --subdomain-enum <dict file path>\x1b[0m\t\tLists subdomains of every domain found" + \
+              " (needs a file with a list of subdomain names\r\n")
 
     def printCabeceraInfo(self,host):
         print("\x1b[0;32m[\x1b[0m\x1b[0;32m*\x1b[0m\x1b[0;32m]\x1b[0mDomains of " + host + ":\n")
@@ -141,6 +146,15 @@ class Inforfinder:
                 self.printCabeceraInfo(ip)
                 self.execCmsAndSinfo(dom[ip])
                 print("================================================================================")
+    
+    
+    def setDictFile(self,args,pos):
+        try:
+            self.config['dictfile'] = args[pos + 1]
+            return True
+        except Exception:
+            self.printHelpInfo()
+            exit(1)
 
 
     def execByFile(self,args,pos):
@@ -207,10 +221,12 @@ class Inforfinder:
 
 
     def getSubdomains(self,domain):
-        if self.config['optionals']['--subdomain-enum'] == 1:
+        if self.config['optionals']['--subdomain-enum']['enabled'] == 1:
             print("\t[-] Subdomains of " + str(domain) + ":")
             ds = DomainSearch()
-            subdomains = ds.subdomainEnum(domain)
+            subdomains = ds.subdomainEnum(domain, self.config['dictfile'])
+            if subdomains == "Issue":
+                return -1
             for subdomain in subdomains:
                 if len(subdomain) > 0:
                     print("\tSubdomain: " + subdomain['subdomain'] + ", IP: " + subdomain['ip'])
@@ -232,7 +248,14 @@ class Inforfinder:
             for option in self.config['optionals']:
                 optionchk = self.isExistsArg(args, option)
                 if optionchk[0] == True:
-                    self.config['optionals'][option] = 1
+                    optionname = self.config['optionals'][option]
+                    if optionname == 0 or optionname == 1:
+                        self.config['optionals'][option] = 1
+                    else:
+                        pos = optionchk[1]
+                        toexec = self.config['optionals'][option]['cmd']
+                        self.config['optionals'][option]['enabled'] = 1
+                        exec(toexec)
             for cmd in self.config['commands']:
                 check = self.isExistsArg(args, cmd)
                 if check[0]==True:

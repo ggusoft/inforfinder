@@ -117,11 +117,11 @@ class DomainSearch:
                 doms.append(dominio)
         return doms
 
-    def subdomainEnum(self,dominio):
+    def subdomainEnum(self,dominio,dictfile):
         subdomenum = []
         wordlisttext = ""
         try:
-            f = open( os.path.dirname(os.path.abspath(__file__)) + "/subdomlist.txt","r")
+            f = open( dictfile,"r")
             wordlisttext = f.read()
             f.close()
         except:
